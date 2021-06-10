@@ -59,12 +59,11 @@ import java.util.regex.Pattern;
 public class ExtensionLoader<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExtensionLoader.class);
-    // 配置文件存储路径
-    // 1. 兼容 jdk 的 SPI 扩展机制
+    // 兼容 jdk 的 SPI 扩展机制的文件存放路径
     private static final String SERVICES_DIRECTORY = "META-INF/services/";
-    // 2. 用户自定义扩展文件存放路径
+    // 用户自定义扩展文件存放路径
     private static final String DUBBO_DIRECTORY = "META-INF/dubbo/";
-    // 3. dubbo 内置扩展文件存放路径
+    // dubbo 内置扩展文件存放路径
     private static final String DUBBO_INTERNAL_DIRECTORY = DUBBO_DIRECTORY + "internal/";
 
     private static final Pattern NAME_SEPARATOR = Pattern.compile("\\s*[,]+\\s*");
