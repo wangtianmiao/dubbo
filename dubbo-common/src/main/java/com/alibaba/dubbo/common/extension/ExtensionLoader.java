@@ -59,7 +59,6 @@ import java.util.regex.Pattern;
 public class ExtensionLoader<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExtensionLoader.class);
-
     // 配置文件存储路径
     // 1. 兼容 jdk 的 SPI 扩展机制
     private static final String SERVICES_DIRECTORY = "META-INF/services/";
