@@ -60,16 +60,18 @@ public class ExtensionLoader<T> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExtensionLoader.class);
 
+    // 配置文件存储路径
+    // 1. 兼容 jdk 的 SPI 扩展机制
     private static final String SERVICES_DIRECTORY = "META-INF/services/";
-
+    // 2. 用户自定义扩展文件存放路径
     private static final String DUBBO_DIRECTORY = "META-INF/dubbo/";
-
+    // 3. dubbo 内置扩展文件存放路径
     private static final String DUBBO_INTERNAL_DIRECTORY = DUBBO_DIRECTORY + "internal/";
 
     private static final Pattern NAME_SEPARATOR = Pattern.compile("\\s*[,]+\\s*");
-
+    // 扩展加载器集合，key 扩展接口
     private static final ConcurrentMap<Class<?>, ExtensionLoader<?>> EXTENSION_LOADERS = new ConcurrentHashMap<Class<?>, ExtensionLoader<?>>();
-
+    // 扩展实现类集合，key 扩展实现类，value 为扩展对象
     private static final ConcurrentMap<Class<?>, Object> EXTENSION_INSTANCES = new ConcurrentHashMap<Class<?>, Object>();
 
     // ==============================
