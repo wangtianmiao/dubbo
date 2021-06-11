@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Adaptive
 public class AdaptiveExtensionFactory implements ExtensionFactory {
-
+    // 扩展类工厂集合，默认为 SPI 和 spring
     private final List<ExtensionFactory> factories;
 
     public AdaptiveExtensionFactory() {
