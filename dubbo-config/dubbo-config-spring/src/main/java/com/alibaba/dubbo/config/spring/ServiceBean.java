@@ -99,21 +99,21 @@ public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (isDelay() && !isExported() && !isUnexported()) {
+        if (isDelay() && !isExported() && !isUnexported()) {    // 是否有延迟导出 && 是否已导出 && 是不是已被取消导出
             if (logger.isInfoEnabled()) {
                 logger.info("The service ready on spring started. service: " + getInterface());
             }
-            export();
+            export();   // 导出服务
         }
     }
 
     private boolean isDelay() {
-        Integer delay = getDelay();
+        Integer delay = getDelay(); // 获取 delay
         ProviderConfig provider = getProvider();
         if (delay == null && provider != null) {
-            delay = provider.getDelay();
+            delay = provider.getDelay();    // 如果前面获取的 delay 为空，这里继续获取
         }
-        return supportedApplicationListener && (delay == null || delay == -1);
+        return supportedApplicationListener && (delay == null || delay == -1);  // 判断 delay 是否为空，或者等于 -1
     }
 
     @Override
