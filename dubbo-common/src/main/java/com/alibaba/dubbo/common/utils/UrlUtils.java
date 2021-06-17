@@ -382,39 +382,39 @@ public class UrlUtils {
 
     public static boolean isMatchGlobPattern(String pattern, String value, URL param) {
         if (param != null && pattern.startsWith("$")) {
-            pattern = param.getRawParameter(pattern.substring(1));
+            pattern = param.getRawParameter(pattern.substring(1));  // 引用服务消费者参数，param 参数为服务消费者 url
         }
-        return isMatchGlobPattern(pattern, value);
+        return isMatchGlobPattern(pattern, value);  // 调用重载方法继续比较
     }
 
     public static boolean isMatchGlobPattern(String pattern, String value) {
-        if ("*".equals(pattern))
-            return true;
+        if ("*".equals(pattern))    // 对 * 通配符提供支持
+            return true;    // 匹配规则为通配符 *，直接返回 true 即可
         if ((pattern == null || pattern.length() == 0)
                 && (value == null || value.length() == 0))
-            return true;
+            return true;    // pattern 和 value 均为空，此时可认为两者相等，返回 true
         if ((pattern == null || pattern.length() == 0)
                 || (value == null || value.length() == 0))
-            return false;
+            return false;   // pattern 和 value 其中有一个为空，表明两者不相等，返回 false
 
-        int i = pattern.lastIndexOf('*');
+        int i = pattern.lastIndexOf('*');   // 定位 * 通配符位置
         // doesn't find "*"
         if (i == -1) {
-            return value.equals(pattern);
+            return value.equals(pattern);   // 匹配规则中不包含通配符，此时直接比较 value 和 pattern 是否相等即可，并返回比较结果
         }
         // "*" is at the end
-        else if (i == pattern.length() - 1) {
-            return value.startsWith(pattern.substring(0, i));
+        else if (i == pattern.length() - 1) {   // 通配符 "*" 在匹配规则尾部，比如 10.0.21.*
+            return value.startsWith(pattern.substring(0, i));   // 检测 value 是否以“不含通配符的匹配规则”开头，并返回结果。
         }
         // "*" is at the beginning
-        else if (i == 0) {
-            return value.endsWith(pattern.substring(i + 1));
+        else if (i == 0) {  // 通配符 "*" 在匹配规则头部
+            return value.endsWith(pattern.substring(i + 1));    // 检测 value 是否以“不含通配符的匹配规则”结尾，并返回结果
         }
         // "*" is in the middle
-        else {
-            String prefix = pattern.substring(0, i);
+        else {  // 通配符 "*" 在匹配规则中间位置
+            String prefix = pattern.substring(0, i);    // 通过通配符将 pattern 分成两半，得到 prefix 和 suffix
             String suffix = pattern.substring(i + 1);
-            return value.startsWith(prefix) && value.endsWith(suffix);
+            return value.startsWith(prefix) && value.endsWith(suffix);  // 检测 value 是否以 prefix 开头，且以 suffix 结尾，并返回结果
         }
     }
 
